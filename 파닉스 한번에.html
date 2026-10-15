@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>파닉스 한번에</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8e7;--card:#ffffff;--ink:#2d2a26;--sub:#7a7468;--line:#f0e3c0;--pri:#ff7a45;--vow:#ff5d73;--vowbg:#ffe3e7;--ok:#2fb36d;--bad:#e5484d;--chip:#fff1cf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1b18;--card:#2a2723;--ink:#f4efe6;--sub:#b3aa99;--line:#3b362f;--pri:#ff935f;--vow:#ff8095;--vowbg:#4a2b31;--chip:#3a3426;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1b18;--card:#2a2723;--ink:#f4efe6;--sub:#b3aa99;--line:#3b362f;--pri:#ff935f;--vow:#ff8095;--vowbg:#4a2b31;--chip:#3a3426;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Jua','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:26px;margin:4px 0 10px;text-align:center}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{flex:1;padding:12px;border:0;border-radius:16px;background:var(--chip);color:var(--ink);font:inherit;font-size:18px;cursor:pointer}
+.tabs button.on{background:var(--pri);color:#fff}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:16px;margin-bottom:14px}
+.big{display:flex;align-items:center;justify-content:center;gap:14px}
+.big .L{font-size:88px;line-height:1;color:var(--pri)}
+.big.v .L{color:var(--vow)}
+.info{text-align:left}
+.info div{font-size:20px;margin:2px 0}
+.info small{color:var(--sub);font-size:14px;margin-right:6px}
+.btns{display:flex;gap:8px;margin:12px 0}
+.btn{flex:1;border:0;border-radius:16px;padding:12px 6px;font:inherit;font-size:17px;background:var(--pri);color:#fff;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.alt{background:var(--chip);color:var(--ink)}
+.words{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.w{border:2px solid var(--line);background:var(--card);border-radius:20px;padding:10px;text-align:center;font:inherit;color:var(--ink);cursor:pointer}
+.w .e{font-size:52px;line-height:1.1;display:block}
+.w .t{font-size:22px;display:block;margin-top:2px}
+.w .t b{color:var(--pri)}
+.w:active,.w.sp{background:var(--chip)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.g{aspect-ratio:1;border:2px solid var(--line);background:var(--card);border-radius:14px;font:inherit;font-size:22px;color:var(--ink);cursor:pointer;padding:0}
+.g.v{background:var(--vowbg);border-color:var(--vow);color:var(--vow)}
+.g.on{outline:3px solid var(--pri);outline-offset:1px}
+.lg{font-size:14px;color:var(--sub);margin:8px 2px 0}
+.lg i{color:var(--vow);font-style:normal}
+.nav{display:flex;gap:8px;margin-top:10px}
+.score{display:flex;justify-content:space-between;font-size:18px;margin-bottom:8px}
+.qem{font-size:90px;text-align:center;line-height:1.1}
+.qw{font-size:26px;text-align:center;margin:4px 0 10px;color:var(--sub)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts .btn{font-size:34px;padding:16px}
+.opts .btn.ok{background:var(--ok)}.opts .btn.no{background:var(--bad)}
+.fb{text-align:center;font-size:22px;min-height:32px;margin-top:10px}
+.end{text-align:center;font-size:20px}.end .qem{font-size:70px}
+.pad{position:relative;width:100%;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden}.pad canvas{position:absolute;inset:0;width:100%;height:100%}.pad canvas+canvas{touch-action:none}.pads{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wh{display:flex;align-items:center;gap:10px}.wh .btn{flex:none;padding:8px 18px}.wl{flex:1;text-align:center;font-size:56px;color:var(--pri)}.wrow{display:flex;align-items:center;gap:8px;margin:12px 0 6px;font-size:22px}.wrow span{flex:1}.btn.sm{flex:none;padding:6px 12px;font-size:16px}h3{font-size:18px;margin:10px 0 4px}.cap{font-size:14px;color:var(--sub);margin:6px 2px 0}.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🔤 파닉스 한번에</h1>
+<div class="tabs"><button id="t1" class="on">배우기</button><button id="t3">쓰기</button><button id="t2">퀴즈</button></div>
+
+<section id="learn">
+ <div class="panel">
+  <div class="big" id="big"><div class="L" id="L">Aa</div>
+   <div class="info"><div><small>이름</small><span id="nm"></span></div><div><small>소리</small><span id="sd"></span></div></div></div>
+  <div class="btns"><button class="btn alt" id="bName">🔊 이름</button><button class="btn" id="bSound">🔊 소리</button><button class="btn alt" id="bSlow">🐢 천천히</button></div><div class="btns" style="margin-top:0"><button class="btn" id="bWrite" style="background:var(--ok)">✏️ 따라쓰기</button></div>
+  <div class="words" id="words"></div>
+ </div>
+ <div class="nav"><button class="btn alt" id="prev">◀ 이전</button><button class="btn alt" id="next">다음 ▶</button></div>
+ <div class="panel" style="margin-top:14px">
+  <div class="grid" id="grid"></div>
+  <div class="lg"><i>■</i> 빨간색은 모음(a e i o u)이에요. 글자를 누르면 소리가 나요!</div>
+ </div>
+</section>
+
+<section id="write" class="hide"><div class="panel" id="wbox"></div><div class="panel" id="wwords"></div></section>
+
+<section id="quiz" class="hide">
+ <div class="panel" id="qbox"></div>
+</section>
+</div>
+
+<script>
+// [letter, 이름, 소리, speak-name, speak-sound, w1, emoji1, w2, emoji2]
+const D=[
+["a","에이","ㅐ","ay","at","apple","🍎","apple","🍎"],
+["b","비","ㅂ","bee","buh","ball","⚽","baby","👶"],
+["c","씨","ㅋ","see","kuh","cat","🐱","candy","🍬"],
+["d","디","ㄷ","dee","duh","dog","🐶","diamond","💎"],
+["e","이","ㅔ","ee","eh","elephant","🐘","elephant","🐘"],
+["f","에프","ㅍ","eff","fff","fish","🐟","fairy","🧚"],
+["g","쥐","ㄱ, ㅈ","gee","guh","gorilla","🦍","glasses","👓"],
+["h","에이치","ㅎ","aitch","huh","hat","🎩","hand","✋"],
+["i","아이","ㅣ","eye","ih","igloo","🧊","igloo","🧊"],
+["j","제이","ㅈ","jay","juh","juice","🧃","jelly","🍮"],
+["k","케이","ㅋ","kay","kuh","kangaroo","🦘","keyboard","⌨️"],
+["l","엘","ㄹ","ell","luh","lion","🦁","ladybug","🐞"],
+["m","엠","ㅁ","em","muh","monkey","🐵","monkey","🐵"],
+["n","엔","ㄴ","en","nuh","nose","👃","needle","🪡"],
+["o","오우","ㅏ","oh","odd","octopus","🐙","orange","🍊"],
+["p","피","ㅍ","pee","puh","pig","🐷","pony","🐴"],
+["q","큐","ㅋ","cue","kwuh","question","❓","queen","👸"],
+["r","알","ㄹ","are","ruh","ring","💍","rainbow","🌈"],
+["s","에스","ㅅ","ess","sss","sun","☀️","spider","🕷️"],
+["t","티","ㅌ","tee","tuh","tiger","🐯","train","🚆"],
+["u","유","ㅓ","you","uh","umbrella","☂️","unicorn","🦄"],
+["v","브이","ㅂ (v)","vee","vuh","violin","🎻","van","🚐"],
+["w","더블유","우","double you","wuh","watch","⌚","window","🪟"],
+["x","엑스","ㄱㅅ","ex","ks","box","📦","fox","🦊"],
+["y","와이","이","why","yuh","yo-yo","🪀","yacht","⛵"],
+["z","지","ㅈ","zee","zzz","zebra","🦓","zero","0️⃣"]
+];
+const V="aeiou";
+const $=id=>document.getElementById(id);
+let cur=0,voice=null;
+
+function pick(){const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]US/i.test(v.lang));
+ voice=vs.find(v=>/samantha|google us|aria|jenny|female/i.test(v.name))||vs[0]||null}
+if('speechSynthesis' in window){pick();speechSynthesis.onvoiceschanged=pick}
+function say(t,r){
+ if(!('speechSynthesis' in window)){alert('이 브라우저는 소리 재생을 지원하지 않아요. 크롬이나 사파리를 써주세요.');return}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=r||0.8;u.pitch=1.1;if(voice)u.voice=voice;
+ speechSynthesis.speak(u)}
+
+function show(i){
+ cur=(i+26)%26;const d=D[cur],v=V.includes(d[0]);
+ $('L').textContent=d[0].toUpperCase()+d[0];
+ $('big').className='big'+(v?' v':'');
+ $('nm').textContent=d[1];$('sd').textContent=d[2];
+ $('words').innerHTML=[5,7].map(k=>{const w=d[k],f=w[0];
+  return `<button class="w" data-w="${w}"><span class="e">${d[k+1]}</span><span class="t"><b>${f}</b>${w.slice(1)}</span></button>`}).join('');
+ document.querySelectorAll('.w').forEach(b=>b.onclick=()=>{say(b.dataset.w,0.75)});
+ document.querySelectorAll('.g').forEach((g,n)=>g.classList.toggle('on',n===cur));
+ say(d[3],0.8)}
+
+$('grid').innerHTML=D.map((d,i)=>`<button class="g${V.includes(d[0])?' v':''}" data-i="${i}">${d[0].toUpperCase()}</button>`).join('');
+document.querySelectorAll('.g').forEach(g=>g.onclick=()=>show(+g.dataset.i));
+$('bName').onclick=()=>say(D[cur][3],0.8);
+$('bSound').onclick=()=>say(D[cur][4],0.7);
+$('bSlow').onclick=()=>say(D[cur][5],0.45);
+$('prev').onclick=()=>show(cur-1);$('next').onclick=()=>show(cur+1);
+
+// ---- quiz: hear a word, pick the first letter ----
+const GROUPS=["ckq","gj","bv"];
+let Q=[],qi=0,sc=0,lock=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startQuiz(){
+ const pool=D.filter(d=>d[0]!=='x');
+ Q=shuffle(pool.slice()).slice(0,10).map(d=>{
+  const k=Math.random()<.5?5:7,w=d[k],c=d[0];
+  const ban=(GROUPS.find(g=>g.includes(c))||c);
+  const others=shuffle(pool.filter(p=>!ban.includes(p[0])&&p[0]!==c)).slice(0,3).map(p=>p[0]);
+  return{w,e:d[k+1],c,o:shuffle([c,...others])}});
+ qi=0;sc=0;renderQ()}
+function renderQ(){
+ lock=false;const q=Q[qi];
+ if(!q){const s=sc>=9?'🏆 최고예요!':sc>=6?'🎉 잘했어요!':'💪 다시 도전!';
+  $('qbox').innerHTML=`<div class="end"><div class="qem">${s.split(' ')[0]}</div><p>${sc} / ${Q.length} 정답<br>${s.split(' ')[1]}</p><button class="btn" id="again">다시 하기</button></div>`;
+  $('again').onclick=startQuiz;return}
+ $('qbox').innerHTML=`<div class="score"><span>${qi+1} / ${Q.length}</span><span>⭐ ${sc}</span></div>
+ <div class="qem">${q.e}</div><div class="qw">단어를 듣고, 첫 글자를 골라요!</div>
+ <div class="btns"><button class="btn alt" id="hear">🔊 다시 듣기</button></div>
+ <div class="opts">${q.o.map(l=>`<button class="btn" data-l="${l}">${l}</button>`).join('')}</div><div class="fb" id="fb"></div>`;
+ $('hear').onclick=()=>say(q.w,0.7);
+ document.querySelectorAll('.opts .btn').forEach(b=>b.onclick=()=>answer(b,q));
+ setTimeout(()=>say(q.w,0.7),250)}
+function answer(b,q){
+ if(lock)return;lock=true;const ok=b.dataset.l===q.c;
+ b.classList.add(ok?'ok':'no');
+ if(!ok)document.querySelector(`.opts .btn[data-l="${q.c}"]`).classList.add('ok');
+ if(ok)sc++;
+ $('fb').textContent=ok?'🎉 정답!':`앗! 정답은 ${q.c.toUpperCase()} 예요`;
+ say(ok?q.w:q.c+' for '+q.w,0.75);
+ setTimeout(()=>{qi++;renderQ()},1800)}
+
+function tab(n){
+ $('learn').classList.toggle('hide',n!==1);$('quiz').classList.toggle('hide',n!==2);$('write').classList.toggle('hide',n!==3);
+ [1,2,3].forEach(i=>$('t'+i).classList.toggle('on',n===i));
+ cancelAnimationFrame(ani);speechSynthesis&&speechSynthesis.cancel();
+ if(n===2)startQuiz();if(n===3)renderWrite()}
+$('t1').onclick=()=>tab(1);$('t2').onclick=()=>tab(2);$('t3').onclick=()=>tab(3);$('bWrite').onclick=()=>tab(3);
+
+// ---- tracing: stroke order + word writing ----
+// 100x120 box: cap line y=20, x-line y=50, baseline y=85, descender to ~108. First point of each stroke = start.
+const PS="A:M50 20L25 85|M50 20L75 85|M35 62L65 62;B:M30 20V85|M30 20H52C72 20 72 52 52 52H30|M52 52C80 52 80 85 52 85H30;C:M75 30C65 15 25 15 25 52C25 88 65 88 75 75;D:M30 20V85|M30 20H48C85 20 85 85 48 85H30;E:M30 20V85|M30 20H72|M30 52H65|M30 85H72;F:M30 20V85|M30 20H72|M30 52H65;G:M75 30C65 15 25 15 25 52C25 88 75 90 75 62H52;H:M28 20V85|M72 20V85|M28 52H72;I:M50 20V85|M35 20H65|M35 85H65;J:M60 20V68C60 90 28 90 28 68|M45 20H75;K:M30 20V85|M72 20L30 56|M44 46L74 85;L:M30 20V85H72;M:M25 85V20L50 60L75 20V85;N:M28 85V20L72 85V20;O:M50 20C15 20 15 85 50 85C85 85 85 20 50 20;P:M30 20V85|M30 20H52C80 20 80 55 52 55H30;Q:M50 20C15 20 15 85 50 85C85 85 85 20 50 20|M55 65L78 90;R:M30 20V85|M30 20H52C80 20 80 55 52 55H30|M52 55L74 85;S:M72 28C65 15 28 15 28 36C28 55 72 48 72 68C72 90 32 90 25 74;T:M50 20V85|M25 20H75;U:M28 20V62C28 92 72 92 72 62V20;V:M25 20L50 85L75 20;W:M18 20L34 85L50 40L66 85L82 20;X:M28 20L72 85|M72 20L28 85;Y:M25 20L50 55|M75 20L50 55V85;Z:M25 20H75L25 85H75;a:M68 62C60 48 30 48 30 68C30 90 62 90 68 72|M68 50V85;b:M30 20V85|M30 62C40 45 72 48 72 68C72 90 40 90 30 74;c:M70 58C58 45 30 48 30 68C30 90 58 90 70 78;d:M68 62C60 48 30 48 30 68C30 90 62 90 68 72|M68 20V85;e:M30 68H70C70 45 30 45 30 68C30 90 58 90 70 78;f:M65 26C50 15 40 25 40 42V85|M25 50H62;g:M68 62C60 48 30 48 30 68C30 90 62 90 68 72|M68 50V95C68 112 40 112 30 98;h:M30 20V85|M30 62C38 45 70 45 70 62V85;i:M50 50V85|M50 34V35;j:M50 50V98C50 112 38 112 32 105|M50 34V35;k:M30 20V85|M66 48L30 68|M42 62L68 85;l:M50 20V85;m:M25 50V85|M25 62C30 45 50 45 50 62V85|M50 62C55 45 75 45 75 62V85;n:M30 50V85|M30 62C38 45 70 45 70 62V85;o:M50 50C20 50 20 88 50 88C80 88 80 50 50 50;p:M30 50V108|M30 62C40 45 72 48 72 68C72 90 40 90 30 74;q:M68 62C60 48 30 48 30 68C30 90 62 90 68 72|M68 50V108;r:M35 50V85|M35 66C40 48 55 46 68 52;s:M68 56C58 46 32 46 32 60C32 72 68 66 68 78C68 92 40 92 30 82;t:M45 28V78C45 88 55 88 65 83|M28 50H65;u:M30 50V72C30 92 68 92 70 70|M70 50V85;v:M28 50L50 85L72 50;w:M20 50L35 85L50 58L65 85L80 50;x:M30 50L70 85|M70 50L30 85;y:M28 50L50 85|M72 50L48 100L36 108;z:M30 50H70L30 85H70";
+const P={};PS.split(';').forEach(s=>{P[s[0]]=s.slice(2).split('|')});
+const LN={};function plen(d){if(!LN[d]){const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);LN[d]=p.getTotalLength()||1}return LN[d]}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let ani;
+function mkPad(par,w,h){
+ const box=document.createElement('div');box.className='pad';box.style.aspectRatio=w+'/'+h;
+ const g=document.createElement('canvas'),k=document.createElement('canvas');
+ [g,k].forEach(c=>{c.width=w;c.height=h;box.appendChild(c)});par.appendChild(box);
+ const x=k.getContext('2d');let dn=false,lx,ly;
+ const pt=e=>{const r=k.getBoundingClientRect();return[(e.clientX-r.left)*w/r.width,(e.clientY-r.top)*h/r.height]};
+ x.lineCap=x.lineJoin='round';x.lineWidth=w>400?7:9;x.strokeStyle='#2f7cf6';x.fillStyle='#2f7cf6';
+ k.onpointerdown=e=>{dn=true;k.setPointerCapture(e.pointerId);[lx,ly]=pt(e);x.beginPath();x.arc(lx,ly,x.lineWidth/2,0,7);x.fill()};
+ k.onpointermove=e=>{if(!dn)return;const[nx,ny]=pt(e);x.beginPath();x.moveTo(lx,ly);x.lineTo(nx,ny);x.stroke();lx=nx;ly=ny};
+ k.onpointerup=k.onpointercancel=()=>{dn=false};
+ return{g:g.getContext('2d'),clear:()=>x.clearRect(0,0,w,h)}}
+function rules(c,w,ys){c.save();c.strokeStyle=css('--sub');c.globalAlpha=.4;c.lineWidth=2;ys.forEach((y,i)=>{c.setLineDash(i===ys.length-1?[]:[8,8]);c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke()});c.restore()}
+function glyph(c,ch,prog){
+ c.clearRect(0,0,300,360);rules(c,300,[60,150,255]);
+ c.save();c.scale(3,3);c.lineCap=c.lineJoin='round';c.lineWidth=9;
+ P[ch].forEach((d,i)=>{
+  const p=new Path2D(d),t=prog==null?0:Math.min(Math.max(prog-i,0),1);
+  c.setLineDash([]);c.globalAlpha=.3;c.strokeStyle=css('--sub');c.stroke(p);
+  if(t>0){const L=plen(d);c.globalAlpha=1;c.strokeStyle=css('--pri');c.setLineDash([L,L]);c.lineDashOffset=L*(1-t);c.stroke(p)}});
+ c.setLineDash([]);c.globalAlpha=1;c.font='bold 9px sans-serif';c.textAlign='center';c.textBaseline='middle';
+ P[ch].forEach((d,i)=>{if(prog!=null&&prog<i)return;const m=d.match(/M([\d.]+) ([\d.]+)/);
+  c.fillStyle=css('--vow');c.beginPath();c.arc(+m[1],+m[2],7,0,7);c.fill();c.fillStyle='#fff';c.fillText(i+1,+m[1],+m[2]+.5)});
+ c.restore()}
+function wordPad(par,w){
+ const p=mkPad(par,600,220),c=p.g;rules(c,600,[15,50,95]);rules(c,600,[125,160,205]);
+ c.font='90px Jua,"Apple SD Gothic Neo",sans-serif';c.lineWidth=2;c.setLineDash([4,5]);c.strokeStyle=css('--sub');c.strokeText(w,16,95);return p}
+function renderWrite(){
+ const d=D[cur],U=d[0].toUpperCase(),l=d[0];
+ $('wbox').innerHTML=`<div class="wh"><button class="btn alt" id="wp">◀</button><div class="wl">${U}${l}</div><button class="btn alt" id="wn">▶</button></div><div class="pads" id="lp"></div>
+ <div class="btns"><button class="btn" id="wplay">▶ 순서 보기</button><button class="btn alt" id="wclr">🧽 지우기</button><button class="btn alt" id="wsay">🔊</button></div>
+ <div class="cap">번호 순서대로 손가락(마우스)으로 따라 써요. ▶를 누르면 쓰는 순서를 보여줘요.</div>`;
+ const pu=mkPad($('lp'),300,360),pl=mkPad($('lp'),300,360);
+ glyph(pu.g,U);glyph(pl.g,l);
+ const play=()=>{cancelAnimationFrame(ani);pu.clear();pl.clear();const n=Math.max(P[U].length,P[l].length),t0=performance.now();
+  const f=t=>{const p=(t-t0)/800;if(p<n){glyph(pu.g,U,p);glyph(pl.g,l,p);ani=requestAnimationFrame(f)}else{glyph(pu.g,U);glyph(pl.g,l)}};ani=requestAnimationFrame(f)};
+ $('wplay').onclick=play;$('wclr').onclick=()=>{pu.clear();pl.clear()};$('wsay').onclick=()=>say(d[3],0.8);
+ $('wp').onclick=()=>{cur=(cur+25)%26;renderWrite();say(D[cur][3])};$('wn').onclick=()=>{cur=(cur+1)%26;renderWrite();say(D[cur][3])};
+ $('wwords').innerHTML='<h3>✏️ 단어 써보기</h3><div class="cap" style="margin:0 0 4px">윗줄은 점선을 따라 쓰고, 아랫줄은 혼자 써요.</div>';
+ [...new Set([d[5],d[7]])].forEach(w=>{
+  const e=d[5]===w?d[6]:d[8],r=document.createElement('div');
+  r.innerHTML=`<div class="wrow"><span>${e} ${w}</span><button class="btn alt sm">🔊</button><button class="btn alt sm">🧽</button></div>`;
+  $('wwords').appendChild(r);const wp=wordPad(r,w),b=r.querySelectorAll('button');
+  b[0].onclick=()=>say(w,0.75);b[1].onclick=wp.clear});
+}
+show(0);speechSynthesis&&speechSynthesis.cancel();
+</script>
+</body>
+</html>
